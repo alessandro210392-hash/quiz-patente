@@ -24,16 +24,30 @@ async function startExam() {
     questions: data.questions
   };
 
+  renderLayout();
   startTimer();
   showQuestion();
+}
+
+function renderLayout() {
+  document.body.innerHTML = `
+    <div class="topbar">
+      <div id="timer">Tempo: ${state.time}</div>
+      <div id="errors">Errori: 0</div>
+      <div id="progress">1/${state.questions.length}</div>
+    </div>
+    <div class="container">
+      <div class="question" id="question"></div>
+      <button class="btn true" onclick="answer(true)">VERO</button>
+      <button class="btn false" onclick="answer(false)">FALSO</button>
+    </div>
+  `;
 }
 
 function startTimer() {
   state.interval = setInterval(() => {
     state.time--;
-
-    document.getElementById('timer').innerText =
-      "Tempo: " + state.time;
+    document.getElementById('timer').innerText = "Tempo: " + state.time;
 
     if (state.time <= 0) finish();
   }, 1000);
@@ -42,20 +56,18 @@ function startTimer() {
 function showQuestion() {
   const q = state.questions[state.current];
 
-  document.body.innerHTML = `
-    <h3 id="timer">Tempo: ${state.time}</h3>
-    <h2>${q.question}</h2>
-    <button onclick="answer(true)">VERO</button>
-    <button onclick="answer(false)">FALSO</button>
-    <p>Errore: ${state.errors}</p>
-    <p>Domanda ${state.current + 1}/${state.questions.length}</p>
-  `;
+  document.getElementById('question').innerText = q.question;
+  document.getElementById('progress').innerText =
+    `${state.current + 1}/${state.questions.length}`;
 }
 
 function answer(choice) {
   if (choice !== state.questions[state.current].correct) {
     state.errors++;
   }
+
+  document.getElementById('errors').innerText =
+    "Errori: " + state.errors;
 
   state.current++;
 
@@ -70,7 +82,9 @@ function finish() {
   clearInterval(state.interval);
 
   document.body.innerHTML = `
-    <h1>Esame finito</h1>
-    <h2>Errori: ${state.errors}</h2>
+    <div class="container">
+      <h1>Esame terminato</h1>
+      <h2>Errori: ${state.errors}</h2>
+    </div>
   `;
 }
