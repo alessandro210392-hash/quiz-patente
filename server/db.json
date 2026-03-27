@@ -7,16 +7,21 @@
     }
   ],
   "users": [],
+  "results": [],
   "questions": [
     {
+      "id": 1,
       "question": "I ciclomotori possono avere due o tre ruote",
       "correct": true,
-      "license": "AM"
+      "license": "AM",
+      "topic": "definizioni"
     },
     {
+      "id": 2,
       "question": "Il semaforo rosso permette di passare",
       "correct": false,
-      "license": "B"
+      "license": "B",
+      "topic": "segnaletica"
     }
   ]
 }
