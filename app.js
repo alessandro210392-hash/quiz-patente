@@ -1,34 +1,35 @@
-async function login() {
-  const code = document.getElementById('code').value;
-  const name = document.getElementById('name').value;
-
-  const res = await fetch('https://quiz-patente.onrender.com/login', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({ code, name })
-  });
-
-  const data = await res.json();
-
-  startExam();
-}
-
 async function startExam() {
   const res = await fetch('https://quiz-patente.onrender.com/exam/B');
   const data = await res.json();
 
   let current = 0;
   let errors = 0;
+  let time = 1200;
+
+  const interval = setInterval(() => {
+    time--;
+    document.getElementById('timer').innerText = "Tempo: " + time;
+
+    if (time <= 0) {
+      clearInterval(interval);
+      end();
+    }
+  }, 1000);
 
   function show() {
     const q = data.questions[current];
 
     document.body.innerHTML = `
+      <h3 id="timer">Tempo: ${time}</h3>
       <h2>${q.question}</h2>
       <button onclick="answer(true)">VERO</button>
       <button onclick="answer(false)">FALSO</button>
       <p>Errori: ${errors}</p>
     `;
+  }
+
+  function end() {
+    document.body.innerHTML = `<h1>Fine! Errori: ${errors}</h1>`;
   }
 
   window.answer = (choice) => {
@@ -37,7 +38,7 @@ async function startExam() {
     current++;
 
     if (current >= data.questions.length) {
-      document.body.innerHTML = `<h1>Fine! Errori: ${errors}</h1>`;
+      end();
     } else {
       show();
     }
