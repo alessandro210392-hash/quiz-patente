@@ -31,14 +31,13 @@ function render() {
   document.getElementById('app').innerHTML = `
     <div class="app">
 
-      <!-- SIDEBAR -->
       <div class="sidebar">
         <div>
           <div class="card">Postazione - AB123</div>
 
           <div class="card">
             <b>Mario Rossi</b><br>
-            Scheda Esame
+            Esame Patente B
           </div>
 
           <div class="card">
@@ -50,18 +49,17 @@ function render() {
         <div class="card">Ministero Trasporti</div>
       </div>
 
-      <!-- MAIN -->
       <div class="main">
 
         <div class="top">
-          <div>Domanda ${state.current + 1} di ${state.questions.length}</div>
+          <div>Domanda ${state.current + 1} / ${state.questions.length}</div>
           <div>Errori: ${state.errors}</div>
         </div>
 
         <div class="question">${q.question}</div>
 
         <div class="image">
-          <!-- QUI POTRAI METTERE IMMAGINE -->
+          ${q.image ? `<img src="${q.image}" width="200">` : ''}
         </div>
 
         <div class="answers">
@@ -69,10 +67,11 @@ function render() {
           <button class="btn" onclick="answer(false)">F</button>
         </div>
 
-        <!-- FOOTER -->
         <div class="footer">
           ${state.questions.map((_, i) => `
-            <button class="nav-btn" onclick="go(${i})">${i+1}</button>
+            <button class="nav-btn ${i === state.current ? 'active' : ''}" onclick="go(${i})">
+              ${i + 1}
+            </button>
           `).join('')}
         </div>
 
@@ -95,6 +94,11 @@ function answer(val) {
     state.errors++;
   }
 
+  if (state.errors >= 3) {
+    finish();
+    return;
+  }
+
   next();
 }
 
@@ -114,10 +118,13 @@ function go(i) {
 
 function finish() {
   document.getElementById('app').innerHTML = `
-    <h1>Esame finito</h1>
-    <h2>Errori: ${state.errors}</h2>
+    <div style="text-align:center; margin-top:100px;">
+      <h1>Esame terminato</h1>
+      <h2>Errori: ${state.errors}</h2>
+    </div>
   `;
 }
 
-// AVVIO AUTOMATICO
-login();
+window.onload = () => {
+  login();
+};
