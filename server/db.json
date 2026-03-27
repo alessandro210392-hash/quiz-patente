@@ -1,1 +1,21 @@
 
+{
+  "schools": [
+    {
+      "id": 1,
+      "name": "Autoscuola Demo",
+      "code": "TEST123"
+    }
+  ],
+  "users": [],
+  "questions": [
+    {
+      "question": "I ciclomotori possono avere due o tre ruote",
+      "correct": true
+    },
+    {
+      "question": "Il semaforo rosso permette di passare",
+      "correct": false
+    }
+  ]
+}
