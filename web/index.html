@@ -2,82 +2,103 @@
 <html>
 <head>
   <title>Esame Patente</title>
+
   <style>
     body {
       margin: 0;
       font-family: Arial;
-      background: #dfe6ee;
+      background: #e6e6e6;
     }
 
-    .header {
-      background: #2c3e50;
+    .app {
+      display: flex;
+      height: 100vh;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 260px;
+      background: #2f5fa7;
       color: white;
       padding: 15px;
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
-      font-size: 18px;
     }
 
-    .main {
-      max-width: 800px;
-      margin: 40px auto;
-      background: white;
-      padding: 30px;
-      border-radius: 5px;
-    }
-
-    .question {
-      font-size: 20px;
-      margin-bottom: 30px;
-    }
-
-    .answers {
-      display: flex;
-      justify-content: space-around;
-    }
-
-    .btn {
-      width: 120px;
-      padding: 15px;
-      font-size: 18px;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-
-    .vero {
-      background: #27ae60;
-      color: white;
-    }
-
-    .falso {
-      background: #c0392b;
-      color: white;
-    }
-
-    .login {
-      max-width: 300px;
-      margin: 100px auto;
-      background: white;
-      padding: 20px;
+    .card {
+      background: rgba(255,255,255,0.1);
+      padding: 10px;
+      margin-bottom: 10px;
       text-align: center;
     }
 
-    input {
-      width: 90%;
-      padding: 10px;
-      margin: 5px;
+    .timer {
+      font-size: 28px;
+      margin-top: 10px;
     }
+
+    /* MAIN */
+    .main {
+      flex: 1;
+      background: #f2f2f2;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .question {
+      margin-top: 30px;
+      font-size: 20px;
+    }
+
+    .image {
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .answers {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .btn {
+      font-size: 30px;
+      padding: 20px 40px;
+      margin: 10px;
+      border: 3px solid #2f5fa7;
+      background: white;
+      cursor: pointer;
+    }
+
+    /* FOOTER */
+    .footer {
+      margin-top: auto;
+      background: #2f5fa7;
+      padding: 10px;
+      color: white;
+      text-align: center;
+    }
+
+    .nav-btn {
+      margin: 3px;
+      padding: 5px 10px;
+      background: white;
+      border: none;
+      cursor: pointer;
+    }
+
   </style>
 </head>
+
 <body>
 
-<div class="login" id="login">
-  <h2>Accesso</h2>
-  <input id="code" placeholder="Codice">
-  <input id="name" placeholder="Nome">
-  <button onclick="login()">Entra</button>
-</div>
+<div id="app"></div>
 
 <script src="app.js"></script>
 
