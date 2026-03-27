@@ -1,90 +1,85 @@
-let state = {};
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Esame Patente</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: #dfe6ee;
+    }
 
-async function login() {
-  const code = document.getElementById('code').value;
-  const name = document.getElementById('name').value;
+    .header {
+      background: #2c3e50;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 18px;
+    }
 
-  await fetch('https://quiz-patente.onrender.com/login', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({ code, name })
-  });
+    .main {
+      max-width: 800px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 5px;
+    }
 
-  startExam();
-}
+    .question {
+      font-size: 20px;
+      margin-bottom: 30px;
+    }
 
-async function startExam() {
-  const res = await fetch('https://quiz-patente.onrender.com/exam/B');
-  const data = await res.json();
+    .answers {
+      display: flex;
+      justify-content: space-around;
+    }
 
-  state = {
-    current: 0,
-    errors: 0,
-    time: data.config.time,
-    questions: data.questions
-  };
+    .btn {
+      width: 120px;
+      padding: 15px;
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
 
-  renderLayout();
-  startTimer();
-  showQuestion();
-}
+    .vero {
+      background: #27ae60;
+      color: white;
+    }
 
-function renderLayout() {
-  document.body.innerHTML = `
-    <div class="topbar">
-      <div id="timer">Tempo: ${state.time}</div>
-      <div id="errors">Errori: 0</div>
-      <div id="progress">1/${state.questions.length}</div>
-    </div>
-    <div class="container">
-      <div class="question" id="question"></div>
-      <button class="btn true" onclick="answer(true)">VERO</button>
-      <button class="btn false" onclick="answer(false)">FALSO</button>
-    </div>
-  `;
-}
+    .falso {
+      background: #c0392b;
+      color: white;
+    }
 
-function startTimer() {
-  state.interval = setInterval(() => {
-    state.time--;
-    document.getElementById('timer').innerText = "Tempo: " + state.time;
+    .login {
+      max-width: 300px;
+      margin: 100px auto;
+      background: white;
+      padding: 20px;
+      text-align: center;
+    }
 
-    if (state.time <= 0) finish();
-  }, 1000);
-}
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
 
-function showQuestion() {
-  const q = state.questions[state.current];
+<div class="login" id="login">
+  <h2>Accesso</h2>
+  <input id="code" placeholder="Codice">
+  <input id="name" placeholder="Nome">
+  <button onclick="login()">Entra</button>
+</div>
 
-  document.getElementById('question').innerText = q.question;
-  document.getElementById('progress').innerText =
-    `${state.current + 1}/${state.questions.length}`;
-}
+<script src="app.js"></script>
 
-function answer(choice) {
-  if (choice !== state.questions[state.current].correct) {
-    state.errors++;
-  }
-
-  document.getElementById('errors').innerText =
-    "Errori: " + state.errors;
-
-  state.current++;
-
-  if (state.current >= state.questions.length) {
-    finish();
-  } else {
-    showQuestion();
-  }
-}
-
-function finish() {
-  clearInterval(state.interval);
-
-  document.body.innerHTML = `
-    <div class="container">
-      <h1>Esame terminato</h1>
-      <h2>Errori: ${state.errors}</h2>
-    </div>
-  `;
-}
+</body>
+</html>
