@@ -1,18 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Quiz Patente</title>
+  <title>Esame Patente</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: #dfe6ee;
+    }
+
+    .header {
+      background: #2c3e50;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 18px;
+    }
+
+    .main {
+      max-width: 800px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 5px;
+    }
+
+    .question {
+      font-size: 20px;
+      margin-bottom: 30px;
+    }
+
+    .answers {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .btn {
+      width: 120px;
+      padding: 15px;
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .vero {
+      background: #27ae60;
+      color: white;
+    }
+
+    .falso {
+      background: #c0392b;
+      color: white;
+    }
+
+    .login {
+      max-width: 300px;
+      margin: 100px auto;
+      background: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 5px;
+    }
+  </style>
 </head>
 <body>
 
-<h2>Accesso</h2>
-
-<input id="code" placeholder="Codice autoscuola" />
-<br><br>
-<input id="name" placeholder="Nome" />
-<br><br>
-
-<button onclick="login()">Entra</button>
+<div class="login" id="login">
+  <h2>Accesso</h2>
+  <input id="code" placeholder="Codice">
+  <input id="name" placeholder="Nome">
+  <button onclick="login()">Entra</button>
+</div>
 
 <script src="app.js"></script>
 
