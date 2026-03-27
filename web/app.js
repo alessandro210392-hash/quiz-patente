@@ -1,16 +1,21 @@
 let state = {};
 
 async function login() {
+  const mode = document.getElementById('mode').value;
+
   await fetch('https://quiz-patente.onrender.com/login', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({ code: "TEST123", name: "Mario" })
   });
 
+  startExam(mode);
+}
+
   startExam();
 }
 
-async function startExam() {
+async function startExam(mode) {
   const res = await fetch('https://quiz-patente.onrender.com/exam/B');
   const data = await res.json();
 
@@ -18,8 +23,13 @@ async function startExam() {
     current: 0,
     errors: 0,
     time: data.config.time,
-    questions: data.questions
+    questions: data.questions,
+    mode: mode
   };
+
+  render();
+  timer();
+}
 
   render();
   timer();
@@ -90,15 +100,12 @@ function timer() {
 }
 
 function answer(val) {
+function answer(val) {
   if (val !== state.questions[state.current].correct) {
     state.errors++;
   }
 
-  if (state.errors >= 3) {
-    finish();
-    return;
-  }
-
+ 
   next();
 }
 
