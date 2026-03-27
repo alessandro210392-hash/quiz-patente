@@ -1,12 +1,23 @@
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
+const path = require('path');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-let db = JSON.parse(fs.readFileSync(__dirname + '/db.json'));
+// percorso sicuro db
+const dbPath = path.join(__dirname, 'db.json');
+
+let db = { schools: [], users: [], questions: [] };
+
+try {
+  const data = fs.readFileSync(dbPath);
+  db = JSON.parse(data);
+} catch (err) {
+  console.log('Errore lettura db.json:', err);
+}
 
 app.get('/', (req, res) => {
   res.send('Server funziona!');
@@ -31,7 +42,7 @@ app.post('/login', (req, res) => {
 
 // ESAME
 app.get('/exam/:license', (req, res) => {
-  const questions = db.questions.sort(() => 0.5 - Math.random());
+  const questions = db.questions || [];
 
   res.json({
     questions: questions.slice(0, 10),
@@ -40,3 +51,7 @@ app.get('/exam/:license', (req, res) => {
 });
 
 const PORT = process.env.PORT || 3001;
+
+app.listen(PORT, () => {
+  console.log('Server attivo su ' + PORT);
+});
