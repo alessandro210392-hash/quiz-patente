@@ -42,10 +42,12 @@ app.post('/login', (req, res) => {
 
 // ESAME
 app.get('/exam/:license', (req, res) => {
-  const questions = db.questions || [];
+  const license = req.params.license;
+
+  const questions = db.questions.filter(q => q.license === license);
 
   res.json({
-    questions: questions.slice(0, 10),
+    questions: questions.sort(() => 0.5 - Math.random()).slice(0, 30),
     config: { maxErrors: 3 }
   });
 });
