@@ -24,28 +24,31 @@ async function startExam() {
     questions: data.questions
   };
 
-  renderLayout();
-  startTimer();
-  showQuestion();
+  render();
+  timer();
 }
 
-function renderLayout() {
+function render() {
   document.body.innerHTML = `
-    <div class="topbar">
+    <div class="header">
       <div id="timer">Tempo: ${state.time}</div>
-      <div id="errors">Errori: 0</div>
-      <div id="progress">1/${state.questions.length}</div>
+      <div id="errors">Errori: ${state.errors}</div>
+      <div id="progress">${state.current + 1}/${state.questions.length}</div>
     </div>
-    <div class="container">
-      <div class="question" id="question"></div>
-      <button class="btn true" onclick="answer(true)">VERO</button>
-      <button class="btn false" onclick="answer(false)">FALSO</button>
+
+    <div class="main">
+      <div class="question">${state.questions[state.current].question}</div>
+
+      <div class="answers">
+        <button class="btn vero" onclick="answer(true)">VERO</button>
+        <button class="btn falso" onclick="answer(false)">FALSO</button>
+      </div>
     </div>
   `;
 }
 
-function startTimer() {
-  state.interval = setInterval(() => {
+function timer() {
+  setInterval(() => {
     state.time--;
     document.getElementById('timer').innerText = "Tempo: " + state.time;
 
@@ -53,37 +56,24 @@ function startTimer() {
   }, 1000);
 }
 
-function showQuestion() {
-  const q = state.questions[state.current];
-
-  document.getElementById('question').innerText = q.question;
-  document.getElementById('progress').innerText =
-    `${state.current + 1}/${state.questions.length}`;
-}
-
-function answer(choice) {
-  if (choice !== state.questions[state.current].correct) {
+function answer(val) {
+  if (val !== state.questions[state.current].correct) {
     state.errors++;
   }
-
-  document.getElementById('errors').innerText =
-    "Errori: " + state.errors;
 
   state.current++;
 
   if (state.current >= state.questions.length) {
     finish();
   } else {
-    showQuestion();
+    render();
   }
 }
 
 function finish() {
-  clearInterval(state.interval);
-
   document.body.innerHTML = `
-    <div class="container">
-      <h1>Esame terminato</h1>
+    <div class="main">
+      <h1>Esame finito</h1>
       <h2>Errori: ${state.errors}</h2>
     </div>
   `;
