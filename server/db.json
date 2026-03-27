@@ -1,4 +1,3 @@
-
 {
   "schools": [
     {
@@ -11,11 +10,13 @@
   "questions": [
     {
       "question": "I ciclomotori possono avere due o tre ruote",
-      "correct": true
+      "correct": true,
+      "license": "AM"
     },
     {
       "question": "Il semaforo rosso permette di passare",
-      "correct": false
+      "correct": false,
+      "license": "B"
     }
   ]
 }
