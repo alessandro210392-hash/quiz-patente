@@ -6,7 +6,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-let db = JSON.parse(fs.readFileSync('./db.json'));
+let db = JSON.parse(fs.readFileSync(__dirname + '/db.json'));
 
 app.get('/', (req, res) => {
   res.send('Server funziona!');
