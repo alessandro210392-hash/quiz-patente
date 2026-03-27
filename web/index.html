@@ -108,7 +108,23 @@
 </head>
 
 <body>
+<div class="login" id="login">
+  <h2>Simulatore Patente</h2>
 
+  <input id="code" placeholder="Codice">
+  <input id="name" placeholder="Nome">
+
+  <br><br>
+
+  <select id="mode">
+    <option value="exam">Modalità Esame</option>
+    <option value="training">Modalità Allenamento</option>
+  </select>
+
+  <br><br>
+
+  <button onclick="login()">Entra</button>
+</div>
 <div id="app"></div>
 
 <script src="app.js"></script>
